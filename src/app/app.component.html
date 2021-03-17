@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="userData">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              formControlName="username"
+              class="form-control">
+              <span *ngIf="signupForm.get('userData.username').invalid && signupForm.get('userData.username').touched">Please enter a username</span>
+          </div>
+          <div class="form-group">
+            <label for="email">email</label>
+            <input
+              type="text"
+              id="email"
+              formControlName="email"
+              class="form-control">
+              <span *ngIf="signupForm.get('userData.email').invalid && signupForm.get('userData.email').touched">Please enter a email</span>
+          </div>
+          <button type="button" class="btn btn-success" (click)="onUsername()">Add Username</button>
+          <button type="button" class="btn btn-success" (click)="onDefault()">Add Default Values</button>
+
+        </div>       
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input
+              type="radio"
+              formControlName="gender"
+              [value]="gender">{{ gender }}
+          </label>
+        </div>
+        <div formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+            <button class="btn btn-primary" type="button" (click)="onAddHobby()">Add hobby</button>
+            <div class="form-group" *ngFor="let hobby of getHobbies();let i = index;">
+              <input type="text" class="form-control" [formControlName]="i">
+            </div>
+           
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="signupForm.invalid">Submit</button>
+      </form>
+      <div *ngIf="submit">
+        <ul>
+          <li>Username: {{ user.username}}</li>
+          <li>Email: {{ user.email}}</li>
+          <li>Gender: {{ user.gender}}</li>
+          <li>Hobbies: {{ hobbies}}</li>
+        </ul>     
+      </div>     
+    </div>
+  </div>
+</div>
